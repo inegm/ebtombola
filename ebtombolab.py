@@ -9,12 +9,33 @@ class Tombolab():
         self.gamblers = []
         self.luckyness_maximus = luckyness_maximus
 
+    def __repr__(self):
+        r = '{} GAMBLERS GAMBLING\n'.format(len(self.gamblers))
+        if len(self.lots.keys()) > 0:
+            r += 'LOTS\n'
+            for lot in self.lots.keys():
+                r += '\t{}\n'.format(lot)
+        else:
+            r += 'NO LOTS DEFINED\n'
+        if len(self.claims.keys()) > 0:
+            r += 'CLAIMS\n'
+            for lot in self.claims.keys():
+                r += '\t{} -> {}\n'.format(lot, self.claims[lot])
+        else:
+            r += 'NO LOTS CLAIMED\n'
+        if 'name' in self.__dict__.keys():
+            r += 'SAVED AS\n\t{}'.format(self.name)
+        else:
+            r += 'STATE NOT SAVED'
+        return str(r)
+
     def _is_lucky(self, gambler):
         return list(
             self.claims.values()
         ).count(gambler) > self.luckyness_maximus
 
     def save(self, name):
+        self.name = name
         with open('.'.join([name, 'pkl']), 'wb') as f:
             pickle.dump(self.__dict__, f)
 
