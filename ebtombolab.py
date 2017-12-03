@@ -1,4 +1,5 @@
 import random
+import pickle
 
 
 class Tombolab():
@@ -12,6 +13,14 @@ class Tombolab():
         return list(
             self.claims.values()
         ).count(gambler) > self.luckyness_maximus
+
+    def save(self, name):
+        with open('.'.join([name, 'pkl']), 'wb') as f:
+            pickle.dump(self.__dict__, f)
+
+    def load(self, name):
+        with open('.'.join([name, 'pkl']), 'rb') as f:
+            self.__dict__ = pickle.load(f)
 
     def create_lot(self, name):
         self.lots.update({
