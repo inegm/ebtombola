@@ -1,4 +1,4 @@
-# EasternBloc Tombolab super-hyper-lot-drawing-machine
+# EasternBloc Tombola super-hyper-lot-drawing-machine
 
 you'll need Python3 installed to use the machine
 
@@ -8,9 +8,9 @@ you'll need Python3 installed to use the machine
 
 try these things
 
-    from ebtombolab import *
+    from ebtombola import *
 
-    tombo = Tombolab()
+    tombo = Tombola()
 
     tombo.create_lot('soundy')
 

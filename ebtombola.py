@@ -2,7 +2,7 @@ import random
 import pickle
 
 
-class Tombolab():
+class Tombola():
     def __init__(self, luckyness_maximus=2):
         self.lots = {}
         self.claims = {}
