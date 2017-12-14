@@ -2,32 +2,46 @@
 
 you'll need Python3 installed to use the machine
 
-1. open a console
+1. open a terminal window
 2. type `python3`
-3. use the machine
+3. import the module by typing `from ebtombola import *`
+4. use the machine
 
-try these things
+## try these things
 
-    from ebtombola import *
+### creating a tombola and adding lots
 
-    tombo = Tombola()
+create a tombola: `tombola = Tombola()` (you only need to do this once!)
 
-    tombo.create_lot('soundy')
+create a new lot: `tombola.create_lot('blinky')` (where blinky is the name of your new lot! wrapped in 's)
 
-    tombo.create_lot('blinky')
+### creating gamblers and placing bets on lots
 
-    g = Gambler('greg', 4, tombo)
+create a gambler: `gambler = Gambler('aname', 10, tombola)`, where:
 
-    g.place_tickets('soundy', 2)
+- aname is the name of the gambler (it has to be unique) wrapped in 's,
+- 10 is the number of tickets they purchased,
+- tombola is the `tombola` instance you created above.
 
-    g.place_tickets('blinky', 2)
+place a gambler's tickets: `gambler.place_tickets('blinky', 4)`, where:
 
-    g = Gambler('martin', 4, tombo)
+- blinky is the name of the lot the gambler is betting on, wrapped in 's,
+- 4 is the number of tickets they are placing
 
-    g.place_tickets('soundy', 4)
+if a gambler decides to buy new tickets after having already placed tickets earlier, you'll have to skip the duplicates validation step by adding a `force` parameter like this: `gambler = Gambler('aname', 5, tombola, force=True)`
 
-    tombo.draw_lot('soundy')
+### drawing lots
 
-    tombo.draw_lot('blinky')
+draw lots and find a winner: `tombola.draw_lot('blinky')`
 
-    tombo.claims
+### other things
+
+you can always check on the state of a Tombola by simply typing `tombola`
+
+you can see the lots and the gamblers that have bet on each: `tombola.lots`
+
+you can see the claims (winners) by typing `tombo.claims`
+
+you can see which gamblers have yet to claim a prize with `tombo.gamblers`
+
+by default, gamblers can win a maximum of 2 lots. To change this number to 3 for example: `tombola.luckyness_maximus = 3`
