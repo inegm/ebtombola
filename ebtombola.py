@@ -62,7 +62,7 @@ class Tombola():
         except KeyError:
             print('ERROR: lot "{}" does not exist'.format(lot_name))
 
-    def draw_lot(self, lot_name):
+    def draw_lot(self, lot_name, suspense=5):
         if lot_name in self.claims.keys():
             print('ERROR: lot {} has been claimed by {}'.format(
                 lot_name, self.claims[lot_name]))
@@ -90,11 +90,12 @@ class Tombola():
         self.claims.update({lot_name: winner})
         del(self.lots[lot_name])
 
-        for t in range(5, 0):
-            print(t)
-            time.sleep(1)
-
-        return winner
+        for t in range(suspense, 0, -1):
+            print('#' * t * 10)
+            time.sleep(0.5)
+        print('\n!! {} !!\n'.format(winner))
+        for t in range(suspense + 1):
+            print('#' * t * 10)
 
 
 class Gambler():
