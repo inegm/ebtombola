@@ -48,9 +48,9 @@ you can always check on the state of a Tombola by simply typing `tombola`
 
 you can see the lots and the gamblers that have bet on each: `tombola.lots`
 
-you can see the claims (winners) by typing `tombo.claims`
+you can see the claims (winners) by typing `tombola.claims`
 
-you can see which gamblers have yet to claim a prize with `tombo.gamblers`
+you can see which gamblers have yet to claim a prize with `tombola.gamblers`
 
 by default, gamblers can win a maximum of 2 lots. To change this number to 3 for example, use `tombola.luckyness_maximus = 3`
 
