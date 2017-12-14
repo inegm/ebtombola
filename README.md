@@ -28,11 +28,17 @@ place a gambler's tickets: `gambler.place_tickets('blinky', 4)`, where:
 - blinky is the name of the lot the gambler is betting on, wrapped in 's,
 - 4 is the number of tickets they are placing
 
-if a gambler decides to buy new tickets after having already placed tickets earlier, you'll have to skip the duplicates validation step by adding a `force` parameter like this: `gambler = Gambler('aname', 5, tombola, force=True)`
+if a gambler decides to buy new tickets after having already placed tickets earlier, you'll have to skip the duplicates validation step by adding a `force` parameter like this: `gambler = Gambler('aname', 5, tombola, force=True)`. You can then proceed to place the tickets as you did the first time.
 
 ### drawing lots
 
 draw lots and find a winner: `tombola.draw_lot('blinky')`
+
+### saving and loading the tombola's state
+
+you can save the state of a tombola by typing `tombola.save('aname')` (where aname is the name you want to save it under)
+
+you can load a previously saved tombola by typing `tombola.load('aname')` (where aname is the name you gave the saved state earlier)
 
 ### other things
 
