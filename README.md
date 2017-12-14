@@ -40,6 +40,8 @@ you can save the state of a tombola by typing `tombola.save('aname')` (where ana
 
 you can load a previously saved tombola by typing `tombola.load('aname')` (where aname is the name you gave the saved state earlier)
 
+by default, Tombola instances are set to autosave each time there is a change in their state *after* they've been saved at least once. To change this default autosaving behavior so that saving needs to be done manually: `tombola.autosave = False`
+
 ### other things
 
 you can always check on the state of a Tombola by simply typing `tombola`
@@ -52,4 +54,4 @@ you can see which gamblers have yet to claim a prize with `tombo.gamblers`
 
 by default, gamblers can win a maximum of 2 lots. To change this number to 3 for example, use `tombola.luckyness_maximus = 3`
 
-if the default lot drawing suspense level of 5 is too much to handle, you can change it with `tombo.draw_lot('blinky', suspense=3)`
+if the default lot drawing suspense level of 5 is too much to handle, you can change it with `tombola.draw_lot('blinky', suspense=3)`

@@ -4,14 +4,12 @@ import time
 
 
 class Tombola():
-    """
-    TODO: Add autosave
-    """
-    def __init__(self, luckyness_maximus=2):
+    def __init__(self, luckyness_maximus=2, autosave=True):
         self.lots = {}
         self.claims = {}
         self.gamblers = set()
         self.luckyness_maximus = luckyness_maximus
+        self.autosave = autosave
 
     def __repr__(self):
         r = '{} GAMBLERS GAMBLING\n'.format(len(self.gamblers))
@@ -59,6 +57,8 @@ class Tombola():
                 return
             self.lots[lot_name].append(gambler.name)
             self.gamblers.add(gambler.name)
+            if hasattr(self, 'name') and self.autosave:
+                self.save(self.name)
         except KeyError:
             print('ERROR: lot "{}" does not exist'.format(lot_name))
 
@@ -96,6 +96,9 @@ class Tombola():
         print('\n!! {} !!\n'.format(winner))
         for t in range(suspense + 1):
             print('#' * t * 10)
+
+        if hasattr(self, 'name') and self.autosave:
+            self.save(self.name)
 
 
 class Gambler():
