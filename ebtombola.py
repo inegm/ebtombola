@@ -52,11 +52,11 @@ class Tombola():
         try:
             self.lots[lot_name].append(gambler)
         except KeyError:
-            raise KeyError('lot "{}" does not exist'.format(lot_name))
+            print('ERROR: lot "{}" does not exist'.format(lot_name))
 
     def draw_lot(self, lot_name):
         if lot_name in self.claims.keys():
-            raise ValueError('lot {} has been claimed by {}'.format(
+            print('ERROR: lot {} has been claimed by {}'.format(
                 lot_name, self.claims[lot_name]))
         try:
             random.shuffle(self.lots[lot_name])
@@ -65,11 +65,12 @@ class Tombola():
                 try:
                     winner = self.lots[lot_name].pop()
                 except IndexError:
-                    print('either no gamblers or too much luck')
+                    print('ERROR: either no gamblers or too much luck')
+                    break
                 if self._is_lucky(winner):
                     winner = None
         except KeyError:
-            raise KeyError('lot "{}" does not exist'.format(lot_name))
+            print('ERROR: lot "{}" does not exist'.format(lot_name))
 
         self.claims.update({lot_name: winner})
 
@@ -79,21 +80,23 @@ class Tombola():
 class Gambler():
     def __init__(self, name, n_tickets, tombolab, force=False):
         if name in tombolab.gamblers and not force:
-            raise ValueError(
-                'gambler "{}" is already registered. Force ?'.format(name))
+            print(
+                'ERROR: gambler "{}" is already registered. Force?'.format(
+                    name))
         self.tombolab = tombolab
         self.name = name
         self.tickets_remaining = n_tickets
 
     def place_tickets(self, lot_name, n=1):
         if n > self.tickets_remaining:
-            print('not enough remaining tickets\n{} tickets remain'.format(
-                self.tickets_remaining))
+            print(
+                'ERROR: not enough remaining tickets\n' +
+                '{} tickets remain'.format(self.tickets_remaining))
             return
         try:
             for _ in range(n):
                 self.tombolab.update_lot(lot_name, self.name)
             self.tickets_remaining -= n
-            print('{} ticket(s) remain'.format(self.tickets_remaining))
+            print('{} tickets remain'.format(self.tickets_remaining))
         except KeyError:
-            raise KeyError('lot "{}" does not exist'.format(lot_name))
+            print('ERROR: lot "{}" does not exist'.format(lot_name))
