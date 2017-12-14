@@ -50,4 +50,6 @@ you can see the claims (winners) by typing `tombo.claims`
 
 you can see which gamblers have yet to claim a prize with `tombo.gamblers`
 
-by default, gamblers can win a maximum of 2 lots. To change this number to 3 for example: `tombola.luckyness_maximus = 3`
+by default, gamblers can win a maximum of 2 lots. To change this number to 3 for example, use `tombola.luckyness_maximus = 3`
+
+if the default lot drawing suspense level of 5 is too much to handle, you can change it with `tombo.draw_lot('blinky', suspense=3)`
