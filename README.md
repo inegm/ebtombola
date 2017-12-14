@@ -2,7 +2,7 @@
 
 you'll need Python3 installed to use the machine
 
-1. open a terminal window
+1. open a terminal window and navigate to the source code's directory
 2. type `python3`
 3. import the module by typing `from ebtombola import *`
 4. use the machine
