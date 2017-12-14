@@ -1,12 +1,16 @@
 import random
 import pickle
+import time
 
 
 class Tombola():
+    """
+    TODO: Add autosave
+    """
     def __init__(self, luckyness_maximus=2):
         self.lots = {}
         self.claims = {}
-        self.gamblers = []
+        self.gamblers = set()
         self.luckyness_maximus = luckyness_maximus
 
     def __repr__(self):
@@ -32,7 +36,7 @@ class Tombola():
     def _is_lucky(self, gambler):
         return list(
             self.claims.values()
-        ).count(gambler) > self.luckyness_maximus
+        ).count(gambler) > self.luckyness_maximus - 1
 
     def save(self, name):
         self.name = name
@@ -50,7 +54,11 @@ class Tombola():
 
     def update_lot(self, lot_name, gambler):
         try:
-            self.lots[lot_name].append(gambler)
+            if gambler.tombola != self:
+                print('ERROR: invalid gambler')
+                return
+            self.lots[lot_name].append(gambler.name)
+            self.gamblers.add(gambler.name)
         except KeyError:
             print('ERROR: lot "{}" does not exist'.format(lot_name))
 
@@ -58,6 +66,7 @@ class Tombola():
         if lot_name in self.claims.keys():
             print('ERROR: lot {} has been claimed by {}'.format(
                 lot_name, self.claims[lot_name]))
+            return
         try:
             random.shuffle(self.lots[lot_name])
             winner = None
@@ -66,24 +75,38 @@ class Tombola():
                     winner = self.lots[lot_name].pop()
                 except IndexError:
                     print('ERROR: either no gamblers or too much luck')
-                    break
+                    return
                 if self._is_lucky(winner):
+                    self.lots[lot_name] = [
+                        gambler for gambler in self.lots[lot_name]
+                        if gambler != winner
+                    ]
+                    self.gamblers.remove(winner)
                     winner = None
         except KeyError:
             print('ERROR: lot "{}" does not exist'.format(lot_name))
+            return
 
         self.claims.update({lot_name: winner})
+        del(self.lots[lot_name])
+
+        for t in range(5, 0):
+            print(t)
+            time.sleep(1)
 
         return winner
 
 
 class Gambler():
-    def __init__(self, name, n_tickets, tombolab, force=False):
-        if name in tombolab.gamblers and not force:
+    def __init__(self, name, n_tickets, tombola, force=False):
+        if not hasattr(tombola, 'gamblers'):
+            print('ERROR: invalid tombola')
+            return
+        if name in tombola.gamblers and not force:
             print(
                 'ERROR: gambler "{}" is already registered. Force?'.format(
                     name))
-        self.tombolab = tombolab
+        self.tombola = tombola
         self.name = name
         self.tickets_remaining = n_tickets
 
@@ -95,7 +118,7 @@ class Gambler():
             return
         try:
             for _ in range(n):
-                self.tombolab.update_lot(lot_name, self.name)
+                self.tombola.update_lot(lot_name, self)
             self.tickets_remaining -= n
             print('{} tickets remain'.format(self.tickets_remaining))
         except KeyError:
