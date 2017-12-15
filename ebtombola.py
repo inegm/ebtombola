@@ -100,6 +100,13 @@ class Tombola():
         if hasattr(self, 'name') and self.autosave:
             self.save(self.name)
 
+    def leftover_lots(self):
+        leftovers = []
+        for lot, bets in self.lots.items():
+            if bets == []:
+                leftovers.append(lot)
+        return leftovers
+
 
 class Gambler():
     def __init__(self, name, n_tickets, tombola, force=False):

@@ -52,6 +52,8 @@ you can see the claims (winners) by typing `tombola.claims`
 
 you can see which gamblers have yet to claim a prize with `tombola.gamblers`
 
+you can find out what lots have not been bet on by using `tombola.leftover_lots()`
+
 by default, gamblers can win a maximum of 2 lots. To change this number to 3 for example, use `tombola.luckyness_maximus = 3`
 
 if the default lot drawing suspense level of 5 is too much to handle, you can change it with `tombola.draw_lot('blinky', suspense=3)`
